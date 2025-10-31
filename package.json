@@ -1,0 +1,20 @@
+{
+  "name": "coterie-exercise",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright + TypeScript API testing framework for Coterie exercise",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.0",
+    "zod": "^3.23.8"
+  }
+}
+
+
