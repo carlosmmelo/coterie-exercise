@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coverage Selection - Story 2</title>
+</head>
+<body>
+    <h1>Coverage Selection</h1>
+    
+    <div>
+        <label for="state-select">Select State:</label>
+        <select id="state-select">
+            <option value="">-- Select a state --</option>
+            <option value="WI">Wisconsin (WI) - V2</option>
+            <option value="OH">Ohio (OH) - V2</option>
+            <option value="IL">Illinois (IL) - V2</option>
+            <option value="NV">Nevada (NV) - V2</option>
+            <option value="TX">Texas (TX) - V1</option>
+            <option value="NY">New York (NY) - V1</option>
+            <option value="CA">California (CA) - V1</option>
+        </select>
+    </div>
+
+    <div id="coverage-section" style="display: none; margin-top: 20px;">
+        <label>Coverage Options:</label>
+        <div>
+            <input type="radio" id="coverage-none" name="coverage" value="None" checked>
+            <label for="coverage-none">None</label>
+        </div>
+        <div>
+            <input type="radio" id="coverage-silver" name="coverage" value="Silver">
+            <label for="coverage-silver">Silver</label>
+        </div>
+        <div>
+            <input type="radio" id="coverage-gold" name="coverage" value="Gold">
+            <label for="coverage-gold">Gold</label>
+        </div>
+        <div>
+            <input type="radio" id="coverage-platinum" name="coverage" value="Platinum">
+            <label for="coverage-platinum">Platinum</label>
+        </div>
+    </div>
+
+    <script>
+        // V2 states: WI, OH, IL, NV
+        const V2_STATES = ['WI', 'OH', 'IL', 'NV'];
+        // V1 states: TX, NY, CA
+        const V1_STATES = ['TX', 'NY', 'CA'];
+
+        const stateSelect = document.getElementById('state-select');
+        const coverageSection = document.getElementById('coverage-section');
+        const coverageRadios = document.querySelectorAll('input[name="coverage"]');
+        const coverageNone = document.getElementById('coverage-none');
+
+        stateSelect.addEventListener('change', function() {
+            const selectedState = stateSelect.value;
+            
+            if (!selectedState) {
+                // No state selected - hide coverage options
+                coverageSection.style.display = 'none';
+                return;
+            }
+
+            if (V2_STATES.includes(selectedState)) {
+                // V2 state - show coverage options
+                coverageSection.style.display = 'block';
+                // Default to "None"
+                coverageNone.checked = true;
+            } else if (V1_STATES.includes(selectedState)) {
+                // V1 state - hide coverage options
+                coverageSection.style.display = 'none';
+            }
+        });
+
+        // Initialize: hide coverage section on page load
+        coverageSection.style.display = 'none';
+    </script>
+</body>
+</html>
+
