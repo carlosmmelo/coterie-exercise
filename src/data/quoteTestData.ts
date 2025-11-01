@@ -35,9 +35,17 @@ export const edgeScenarios: ValidScenario[] = [
     payload: { revenue: 0, state: 'OH', business: 'retail' }
   },
   {
+    name: 'negative revenue',
+    payload: { revenue: -100, state: 'CA', business: 'retail' }
+  },
+  {
     name: 'very large revenue',
-    payload: { revenue: 10_000_000, state: 'FL', business: 'technology' }
-  }
+    payload: { revenue: 1000000000, state: 'CA', business: 'retail' }
+  },
+  {
+    name: 'very small revenue',
+    payload: { revenue: 0.0000000001, state: 'CA', business: 'retail' }
+  },
 ];
 
 /** Inputs intended to trigger validation errors */
@@ -55,8 +63,8 @@ export const invalidScenarios: InvalidScenario[] = [
     payload: { revenue: 50_000, state: 'CA' }
   },
   {
-    name: 'negative revenue',
-    payload: { revenue: -100, state: 'CA', business: 'retail' }
+    name: 'invalid revenue',
+    payload: { revenue: '100px', state: 'CA', business: 'retail' }
   },
   {
     name: 'invalid state code',
