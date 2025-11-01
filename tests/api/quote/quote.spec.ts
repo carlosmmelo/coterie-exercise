@@ -3,10 +3,10 @@
  * Covers: valid flows, edge inputs, invalid inputs, and schema validation.
  */
 import { test, expect } from '@playwright/test';
-import { QuoteApi } from '../../src/api/quoteApi';
-import { QuoteResponseSchema, validateSchema } from '../../src/utils/schemas';
-import { validScenarios, invalidScenarios, edgeScenarios } from '../../src/data/quoteTestData';
-import { attachRequestAndResponse } from '../../src/utils/reporting';
+import { QuoteApi } from '../../../src/api/quoteApi';
+import { QuoteResponseSchema, validateSchema } from '../../../src/utils/schemas';
+import { validScenarios, invalidScenarios, edgeScenarios } from '../../../src/data/quoteTestData';
+import { attachRequestAndResponse } from '../../../src/utils/reporting';
 
 test.describe('Quote API', () => {
   test.describe('Valid requests', () => {
