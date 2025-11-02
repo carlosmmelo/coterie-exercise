@@ -1,52 +1,169 @@
-## Coterie Exercise - Playwright API Tests
+## Coterie Exercise - Playwright API & UI Tests
 
 ### Overview
-Playwright + TypeScript API testing framework that exercises `POST /quote` on the mock API.
+Playwright + TypeScript testing framework that includes:
+- **API Tests**: Exercises `POST /quote` on the mock API
+- **UI Tests**: E2E tests for the Coverage Selection frontend (Story 2)
 
-Endpoint base URL (configurable): `https://coterie-exercise.free.mockoapp.net`.
+**API Endpoint base URL (configurable)**: `https://coterie-exercise.free.mockoapp.net`
 
-### Structure
-- `playwright.config.ts`: Global config, base URL, and headers
-- `src/api/baseApi.ts`: Reusable API base for requests
-- `src/api/quoteApi.ts`: `QuoteApi` wrapper for `/quote`
-- `src/utils/schemas.ts`: Zod schemas and helper
-- `src/data/quoteTestData.ts`: Structured test scenarios
-- `tests/quote/quote.spec.ts`: Test suite (valid, invalid, edge, schema)
+### Project Structure
 
-### File documentation
+#### API Testing Components
+- `playwright.config.ts`: Configuration with separate projects for API and UI tests
+- `src/api/baseApi.ts`: Reusable API base class for HTTP requests
+- `src/api/quoteApi.ts`: `QuoteApi` wrapper for `/quote` endpoint
+- `src/utils/schemas.ts`: Zod schemas and validation helpers
+- `src/utils/reporting.ts`: Test reporting utilities
+- `src/data/quoteTestData.ts`: Structured API test scenarios
+- `tests/api/quote/quote.spec.ts`: API test suite (valid, invalid, edge, schema)
+
+#### UI Testing Components
+- `src/ui/pages/basePage.ts`: Base page class for UI tests
+- `src/ui/pages/coverageSelectionPage.ts`: Page Object Model for coverage selection
+- `src/ui/locators/coverageLocators.ts`: Centralized UI selectors
+- `src/data/uiTestData.ts`: UI test data and scenarios
+- `tests/ui/coverage/coverage.spec.ts`: UI E2E test suite
+- `app/public/index.html`: Frontend application for Story 2
+
+#### Configuration Files
 - `package.json`: Declares dependencies (`@playwright/test`, `typescript`, `zod`) and test scripts
-- `tsconfig.json`: Strict TS configuration for test and source files
-- `playwright.config.ts`: Sets `baseURL`, default headers, reporters, and timeouts
-- `src/api/baseApi.ts`: Documents a small API client abstraction returning normalized envelopes
-- `src/api/quoteApi.ts`: Documents operations specific to `/quote` and payload typing
-- `src/utils/schemas.ts`: Documents response schema and helper validation function
-- `src/data/quoteTestData.ts`: Documents scenario collections and intended usage
-- `tests/quote/quote.spec.ts`: Documents coverage areas and expectations style
+- `tsconfig.json`: Strict TypeScript configuration for test and source files
+- `playwright.config.ts`: Sets base URLs, headers, reporters, timeouts, and web server configuration
 
-### Install & Run
-1. Install dependencies:
+### Installation Guide
+
+1. **Install Node.js dependencies:**
 ```bash
-npm i
+npm install
 ```
-2. Run tests:
+
+2. **Install Playwright browsers:**
+```bash
+npx playwright install
+```
+
+   This will download Chromium, Firefox, and WebKit browsers required for UI tests.
+
+   **Note**: If you only need specific browsers, you can install them individually:
+   ```bash
+   npx playwright install chromium  # For Chromium only
+   npx playwright install firefox  # For Firefox only
+   npx playwright install webkit  # For WebKit only
+   ```
+
+### Running Tests
+
+#### Run All Tests
 ```bash
 npm test
 ```
-3. Open HTML report:
+Runs both API and UI test suites.
+
+#### Run Specific Test Projects
+
+**Run only API tests:**
+```bash
+npm test -- --project=api
+```
+
+**Run only UI tests:**
+```bash
+npm test -- --project=ui
+```
+
+#### Run Tests in UI Mode
+```bash
+npm run test:ui
+```
+Opens Playwright's interactive UI mode where you can run, debug, and watch tests.
+
+#### Run a Specific Test File
+```bash
+# Run API tests
+npm test -- tests/api/quote/quote.spec.ts
+
+# Run UI tests
+npm test -- tests/ui/coverage/coverage.spec.ts
+```
+
+#### Run Tests in Debug Mode
+```bash
+npm test -- --debug
+```
+
+### Test Reports
+
+#### View HTML Report
+After running tests, generate and open the HTML report:
 ```bash
 npm run test:report
 ```
 
-### Config
-- Override API base URL:
+The HTML report includes:
+- Test execution timeline
+- Screenshots and videos (for UI tests)
+- Test results and failures
+- Detailed error messages
+
+Reports are saved in the `playwright-report/` directory.
+
+### Configuration
+
+#### Override API Base URL
 ```bash
 API_BASE_URL=https://your-host npm test
 ```
 
-### Notes on Strategy
-- Reusability via `ApiBase` and `QuoteApi`
-- Test data management through scenario arrays
-- Schema validation with Zod verifies response structure, not specific values
-- Coverage includes: valid cases, invalid/missing fields, edge inputs, and schema-only checks
+#### Run Tests on Specific Browsers
+```bash
+# Run UI tests on Chromium only
+npm test -- --project=ui --project=chromium
+
+# Run UI tests on Firefox
+npm test -- --project=ui --project=firefox
+```
+
+#### Run Tests in Headed Mode
+```bash
+npm test -- --project=ui --headed
+```
+
+### Test Coverage
+
+#### API Tests
+- Valid request scenarios (various states and business types)
+- Invalid/missing input validation
+- Edge cases (zero revenue, negative values, very large numbers)
+- Response schema validation using Zod
+
+#### UI Tests (Story 2 Requirements)
+- V2 customers see all four coverage options (Silver, Gold, Platinum, None)
+- V1 customers do not see coverage options
+- Default selection is "None" for V2 customers
+- Users can select different coverage options
+- Edge cases (state switching, initial state)
+
+### Testing Strategy
+
+#### API Testing
+- Reusability via `ApiBase` and `QuoteApi` classes
+- Test data management through centralized scenario arrays
+- Schema validation with Zod verifies response structure
+- Coverage includes: valid cases, invalid/missing fields, edge inputs, and schema validation
+
+#### UI Testing
+- **Page Object Model (POM)**: Encapsulates page interactions in reusable classes
+- **Selector Strategy**: Prioritizes ID selectors for reliability
+- **Test Data Management**: Centralized test data in `uiTestData.ts`
+- **Base Classes**: Reusable `BasePage` class for common functionality
+- **Proper Waits**: Uses `waitFor()` before interactions for stability
+- **DRY Principle**: Avoids code duplication with helper methods
+
+### Type Checking
+Run TypeScript type checking without executing tests:
+```bash
+npm run typecheck
+```
 
 
