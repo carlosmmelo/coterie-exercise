@@ -20,10 +20,10 @@ Playwright + TypeScript testing framework that includes:
 
 #### UI Testing Components
 - `src/ui/pages/basePage.ts`: Base page class for UI tests
-- `src/ui/pages/coverageSelectionPage.ts`: Page Object Model for coverage selection
-- `src/ui/locators/coverageLocators.ts`: Centralized UI selectors
+- `src/ui/pages/coverageSelectionPage.ts`: Page Object Model for coverage selection page
+- `src/ui/locators/coverageLocators.ts`: Centralized UI selectors for the coverage page
 - `src/data/uiTestData.ts`: UI test data and scenarios
-- `tests/ui/coverage/coverage.spec.ts`: UI E2E test suite
+- `tests/ui/coverage/coverage.spec.ts`: UI E2E test suite for the coverage page
 - `app/public/index.html`: Frontend application for Story 2
 
 #### Configuration Files
