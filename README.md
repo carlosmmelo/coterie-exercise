@@ -7,6 +7,54 @@ Playwright + TypeScript testing framework that includes:
 
 **API Endpoint base URL (configurable)**: `https://coterie-exercise.free.mockoapp.net`
 
+> **Note**: The API is mocked using [Mocko.dev](https://app.mocko.dev/mocks) service for API testing purposes.
+
+### API Endpoint Behavior
+
+The `POST /quote` endpoint accepts a JSON payload with the following structure:
+
+```json
+{
+  "revenue": number,
+  "state": string,
+  "business": string
+}
+```
+
+#### Supported States & Premium Rates
+
+**V1 States** (Premium = Revenue × 0.025):
+- `CA` (California)
+- `NY` (New York)
+- `TX` (Texas)
+
+**V2 States** (Premium = Revenue × 0.015):
+- `WI` (Wisconsin)
+- `OH` (Ohio)
+- `IL` (Illinois)
+- `NV` (Nevada)
+
+#### Validation Rules
+
+- **Revenue**: Must be greater than 0, not empty, and numeric type
+- **Business**: Must be a string (empty string allowed)
+- **State**: Must be one of the supported states listed above
+
+#### Response Format
+
+**Success Response (200)**:
+```json
+{
+  "premium": number,
+  "quoteId": "Q-xxxxx"
+}
+```
+
+**Error Response (400)**:
+- `"Revenue must be greater than 0, not empty and numeric type."` - Invalid revenue
+- `"Business must be a string (empty string allowed)."` - Invalid business type
+- `"Not a valid customer state."` - Unsupported state code
+
 ### Project Structure
 
 #### API Testing Components
